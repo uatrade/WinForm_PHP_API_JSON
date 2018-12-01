@@ -114,6 +114,7 @@
             this.buttonAddCity.TabIndex = 6;
             this.buttonAddCity.Text = "Добавить город";
             this.buttonAddCity.UseVisualStyleBackColor = true;
+            this.buttonAddCity.Click += new System.EventHandler(this.buttonAddCity_Click);
             // 
             // groupBox2
             // 
