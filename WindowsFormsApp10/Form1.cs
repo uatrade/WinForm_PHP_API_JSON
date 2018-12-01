@@ -18,22 +18,23 @@ namespace WindowsFormsApp10
     {
         private string responseJson;
         FormAddInfo formAddInfo;
+        public List<string> ListCountryFormAdd; //для формы добавления данных
 
         public Form1()
         {
             InitializeComponent();
             Load += Form1_Load;
-            formAddInfo = new FormAddInfo();
         }
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            await LoadComboboxCountriesAsync();
+             await LoadComboboxCountriesAsync();
             //await GetCityAsync();
             //await InsertCountriesAsync();
         }
         private async Task LoadComboboxCountriesAsync()
         {
+            ListCountryFormAdd = new List<string>();
             WebRequest request = WebRequest.Create("http://localhost:81/travel_agancy.loc/apiExem/api.php");
             request.Method = "POST"; // для отправки используется метод Post
                                      // данные для отправки
@@ -64,6 +65,7 @@ namespace WindowsFormsApp10
             foreach(var item in JsonConvert.DeserializeObject<List<Country>>(responseJson))
             {
                 comboBox1.Items.Add(item.countryName);
+                ListCountryFormAdd.Add(item.countryName);
             }
             if(comboBox1.Items.Count>0)
             comboBox1.SelectedIndex = 0;
@@ -177,7 +179,7 @@ namespace WindowsFormsApp10
             WebRequest request = WebRequest.Create("http://localhost:81/travel_agancy.loc/apiExem/api.php");
             request.Method = "POST"; // для отправки используется метод Post
                                      // данные для отправки
-            string data = $"token=ps_rpo_2&param=insCountries&object={JsonConvert.SerializeObject(new Country { countryName="Bolivia"})}";
+            string data = $"token=ps_rpo_2&param=insCountries&object={JsonConvert.SerializeObject(new Country { countryName="Bolgaria3"})}";
             // преобразуем данные в массив байтов
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(data);
             // устанавливаем тип содержимого - параметр ContentType
@@ -201,12 +203,15 @@ namespace WindowsFormsApp10
             }
             response.Close();
             if (responseJson == "200") {
-                MessageBox.Show("Страна добавлена!");
+                MessageBox.Show("Запись добавлена");
             }
         }    
 
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)  //Country
         {
+
+            //await LoadComboboxCountriesAsync();
+       
             listBox1.Items.Clear();
             textBoxStars.Text = "";
             textBoxPrice.Text = "";
@@ -228,8 +233,13 @@ namespace WindowsFormsApp10
 
         private void buttonAddInfo_Click(object sender, EventArgs e)
         {
-            FormAddInfo formAddInfo = new FormAddInfo();
+            FormAddInfo formAddInfo = new FormAddInfo(this);
             formAddInfo.Show();
+        }
+
+        public void AddComboCountryFromForm2(string country)
+        {
+            comboBox1.Items.Add(country);
         }
     }
 }
