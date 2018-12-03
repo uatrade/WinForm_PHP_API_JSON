@@ -70,7 +70,7 @@ namespace WindowsFormsApp10
             WebRequest request = WebRequest.Create("http://localhost:81/travel_agancy.loc/apiExem/api.php");
             request.Method = "POST"; // для отправки используется метод Post
                                      // данные для отправки
-            string data = $"token=ps_rpo_2&param=insCity&insCountry={ comboBoxCountryAdd.SelectedItem}&insCityName={textBoxAddCity.Text}";
+            string data = $"token=ps_rpo_2&param=insCity&insCountry={comboBoxCountryAdd.SelectedItem}&insCityName={textBoxAddCity.Text}";
             // преобразуем данные в массив байтов
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(data);
             // устанавливаем тип содержимого - параметр ContentType
